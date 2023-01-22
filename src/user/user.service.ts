@@ -25,6 +25,17 @@ export class UserService {
     return this.userModel.findById(id).exec();
   }
 
+  findOneByEmail(email: string): Promise<User> {
+    return this.userModel.findOne({ email }).exec();
+  }
+
+  async findPasswordHash(email: string): Promise<string> {
+    const user = await this.userModel
+      .findOne({ email }, { passwordHash: 1 })
+      .exec();
+    return user.passwordHash;
+  }
+
   update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     let passwordHash: string;
     if (updateUserDto.password) {
