@@ -21,23 +21,25 @@ export class UserService {
     return this.userModel.find();
   }
 
-  findOne(id: string) {
-    return this.userModel.findById(id);
+  findOne(id: string): Promise<User> {
+    return this.userModel.findById(id).exec();
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
+  update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     let passwordHash: string;
     if (updateUserDto.password) {
       passwordHash = updateUserDto.password;
     }
 
-    return this.userModel.findByIdAndUpdate(id, {
-      passwordHash,
-      ...updateUserDto,
-    });
+    return this.userModel
+      .findByIdAndUpdate(id, {
+        passwordHash,
+        ...updateUserDto,
+      })
+      .exec();
   }
 
-  remove(id: string) {
-    return this.userModel.findByIdAndDelete(id);
+  remove(id: string): Promise<User> {
+    return this.userModel.findByIdAndDelete(id).exec();
   }
 }
