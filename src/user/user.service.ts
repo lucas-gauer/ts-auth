@@ -14,7 +14,8 @@ export class UserService {
       passwordHash: createUserDto.password,
       ...createUserDto,
     });
-    return createdUser.save();
+    const { passwordHash, ...user } = (await createdUser.save()).toJSON();
+    return user;
   }
 
   async findAll(): Promise<User[]> {

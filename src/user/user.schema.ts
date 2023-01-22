@@ -12,7 +12,7 @@ export class User {
   email: string;
 
   @Prop({ select: false })
-  passwordHash: string;
+  passwordHash?: string;
 
   @Prop({
     required: true,
